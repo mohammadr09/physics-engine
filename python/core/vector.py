@@ -28,23 +28,25 @@ class Vector:
     # Vector Operations
     @staticmethod
     def calc_magnitude(x : float, y : float) -> float:
-        return math.sqrt(math.pow(x, 2) + math.pow(y, 2))
-
+        return math.hypot(x, y)
+    
+    @staticmethod
+    def from_components(x : float, y : float):
+        mag = math.hypot(x, y)
+        angle = math.atan2(y, x)
+        return Vector(mag, angle)
+    
     def add(self, other : Vector) -> Vector:
         x_components = self.get_x() + other.get_x()
         y_components = self.get_y() + other.get_y()
 
-        theta = math.atan(y_components / x_components)
+        theta = math.atan2(y_components, x_components)
         mag = self.calc_magnitude(x_components, y_components)
 
         return Vector(mag, theta)
     
-    def multiply(self, other : float) -> Vector:
-        x_component = self.get_x() * other
-        y_component = self.get_y() * other
-
-        mag = self.calc_magnitude(x_component, y_component)
-        return Vector(mag, self.get_angle())
+    def multiply(self, scalar : float) -> Vector:
+        return Vector(self.magnitude * scalar, self.angle)
     
     def subtract(self, other : Vector) -> Vector:
         other = other.multiply(-1)
@@ -59,4 +61,10 @@ class Vector:
     def angle_between(self, other : Vector) -> float:
         mags = self.get_magnitude() * other.get_magnitude()
 
-        return math.acos(self.dot_product(other) / mags)
+        if mags == 0:
+            raise ValueError("Cannot compute angle with zero vector")
+        
+        cos_theta = self.dot_product(other) / mags
+        cos_theta = max(-1, min(1, cos_theta)) # clamp
+
+        return math.acos(cos_theta)
