@@ -2,9 +2,9 @@ from __future__ import annotations
 import math
 
 class Vector:
-    def __init__(self, magnitude : float, angle : float):
-        self.magnitude = magnitude
-        self.angle = angle
+    def __init__(self, __magnitude : float, __angle : float) -> None:
+        self.magnitude = __magnitude
+        self.angle = __angle
 
     # Getter & Setter Methods
     def get_magnitude(self) -> float:
@@ -31,7 +31,7 @@ class Vector:
         return math.hypot(x, y)
     
     @staticmethod
-    def from_components(x : float, y : float):
+    def from_components(x : float, y : float) -> Vector:
         mag = math.hypot(x, y)
         angle = math.atan2(y, x)
         return Vector(mag, angle)
