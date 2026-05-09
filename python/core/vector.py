@@ -60,7 +60,13 @@ class Vector:
         return Vector(mag, theta)
     
     def multiply(self, scalar : float) -> Vector:
-        return Vector(self.magnitude * scalar, self.angle)
+        mag = abs(self.magnitude * scalar)
+        angle = self.angle
+
+        if scalar < 0:
+            angle += math.pi
+
+        return Vector(mag, angle)
     
     def subtract(self, other : Vector) -> Vector:
         other = other.multiply(-1)
