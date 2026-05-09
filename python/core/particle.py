@@ -28,7 +28,7 @@ class Particle:
 
     @property
     def kinetic_energy(self):
-        return 0.5 * self.mass * self.velocity.get_magnitude() ** 2
+        return 0.5 * self.mass * self.velocity.magnitude ** 2
 
     # apply_force(self, force) -> Vector
     #   To apply forces, we simply take the sum of the vectors.

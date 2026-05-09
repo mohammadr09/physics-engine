@@ -2,29 +2,43 @@ from __future__ import annotations
 import math
 
 class Vector:
-    def __init__(self, __magnitude : float, __angle : float) -> None:
-        self.magnitude = __magnitude
-        self.angle = __angle
-
-    # Getter & Setter Methods
-    def get_magnitude(self) -> float:
-        return self.magnitude
-    
-    def get_angle(self) -> float:
-        return self.angle
-    
-    def get_x(self) -> float:
-        return self.magnitude * math.cos(self.angle)
-    
-    def get_y(self) -> float:
-        return self.magnitude * math.sin(self.angle)
-
-    def set_magnitude(self, magnitude : float) -> None:
+    def __init__(self, magnitude : float, angle : float) -> None:
         self.magnitude = magnitude
-
-    def set_angle(self, angle : float) -> None:
         self.angle = angle
+
+    # Getter & Setter Methods   
+    @property
+    def magnitude(self) -> float:
+        return self._magnitude
     
+    @magnitude.setter
+    def magnitude(self, magnitude : float) -> None:
+        self._magnitude = magnitude
+
+    @property
+    def angle(self) -> float:
+        return self._angle 
+    
+    @angle.setter
+    def angle(self, angle : float) -> None:
+        self._angle = angle 
+
+    @property
+    def x(self) -> float:
+        return self._x 
+    
+    @x.setter
+    def x(self, x : float) -> None:
+        self._x = x 
+
+    @property
+    def y(self) -> float:
+        return self._y
+    
+    @y.setter
+    def y(self, y : float) -> None:
+        self._y = y
+
     # Vector Operations
     @staticmethod
     def calc_magnitude(x : float, y : float) -> float:
@@ -37,8 +51,8 @@ class Vector:
         return Vector(mag, angle)
     
     def add(self, other : Vector) -> Vector:
-        x_components = self.get_x() + other.get_x()
-        y_components = self.get_y() + other.get_y()
+        x_components = self.x + other.x
+        y_components = self.y + other.y
 
         theta = math.atan2(y_components, x_components)
         mag = self.calc_magnitude(x_components, y_components)
@@ -53,13 +67,13 @@ class Vector:
         return self.add(other)
 
     def dot_product(self, other : Vector) -> float:
-        x_components = self.get_x() * other.get_x()
-        y_components = self.get_y() * other.get_y()
+        x_components = self.x * other.x
+        y_components = self.y * other.y
 
         return x_components + y_components
     
     def angle_between(self, other : Vector) -> float:
-        mags = self.get_magnitude() * other.get_magnitude()
+        mags = self.magnitude * other.magnitude
 
         if mags == 0:
             raise ValueError("Cannot compute angle with zero vector")
