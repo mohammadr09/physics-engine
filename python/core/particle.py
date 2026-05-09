@@ -1,5 +1,5 @@
 from __future__ import annotations
-from vector import Vector
+from python.core.vector import Vector
 
 class Particle:
     def __init__(self, pos : Vector,

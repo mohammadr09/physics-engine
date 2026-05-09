@@ -1,6 +1,20 @@
-venv:
-	python -m venv .venv
-	$(if $(OS),$(if $(findstring Windows,$(OS)),cmd /c .venv\Scripts\activate.bat,. .venv/bin/activate),. .venv/bin/activate)
-	
-install:
-	pip install -r requirements.txt
+PYTHON := .venv/bin/python
+
+setup:
+	@if [ ! -d ".venv" ]; then \
+		echo "Creating virtual environment..."; \
+		python3 -m venv .venv; \
+	fi
+
+install: setup
+	$(PYTHON) -m pip install -r requirements.txt
+
+run: setup
+	$(PYTHON) -m python.visual.simulation
+
+freeze: setup
+	$(PYTHON) -m pip freeze > requirements.txt
+
+clean:
+	find . -name "__pycache__" -exec rm -r {} +
+	find . -name "*.pyc" -delete

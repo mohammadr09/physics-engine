@@ -1,5 +1,5 @@
-from core.particle import Particle
-from core.vector import Vector
+from python.core.particle import Particle
+from python.core.vector import Vector
 import math
 
 class Gravity:
