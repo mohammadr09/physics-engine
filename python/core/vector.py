@@ -26,7 +26,7 @@ class Vector:
     # Derived Properties
     @property
     def magnitude(self) -> float:
-        return math.sqrt(self.x**2 + self.y**2)
+        return math.hypot(self.x, self.y)
     
     @property
     def angle(self) -> float:
