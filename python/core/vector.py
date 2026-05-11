@@ -2,34 +2,18 @@ from __future__ import annotations
 import math
 
 class Vector:
-    def __init__(self, magnitude : float, angle : float) -> None:
-        self.magnitude = magnitude
-        self.angle = angle
+    def __init__(self, x : float, y : float) -> None:
+        self.x = x
+        self.y = y
 
-    # Getter & Setter Methods   
-    @property
-    def magnitude(self) -> float:
-        return self._magnitude
-    
-    @magnitude.setter
-    def magnitude(self, magnitude : float) -> None:
-        self._magnitude = magnitude
-
-    @property
-    def angle(self) -> float:
-        return self._angle 
-    
-    @angle.setter
-    def angle(self, angle : float) -> None:
-        self._angle = angle 
-
+    # Getters and Setters
     @property
     def x(self) -> float:
         return self._x 
     
     @x.setter
     def x(self, x : float) -> None:
-        self._x = x 
+        self._x = x
 
     @property
     def y(self) -> float:
@@ -39,39 +23,32 @@ class Vector:
     def y(self, y : float) -> None:
         self._y = y
 
+    # Derived Properties
+    @property
+    def magnitude(self) -> float:
+        return math.sqrt(self.x**2 + self.y**2)
+    
+    @property
+    def angle(self) -> float:
+        return math.atan2(self.y,self.x)
+
     # Vector Operations
-    @staticmethod
-    def calc_magnitude(x : float, y : float) -> float:
-        return math.hypot(x, y)
-    
-    @staticmethod
-    def from_components(x : float, y : float) -> Vector:
-        mag = math.hypot(x, y)
-        angle = math.atan2(y, x)
-        return Vector(mag, angle)
-    
     def add(self, other : Vector) -> Vector:
         x_components = self.x + other.x
         y_components = self.y + other.y
 
-        theta = math.atan2(y_components, x_components)
-        mag = self.calc_magnitude(x_components, y_components)
-
-        return Vector(mag, theta)
+        return Vector(x_components, y_components)
     
     def multiply(self, scalar : float) -> Vector:
-        mag = abs(self.magnitude * scalar)
-        angle = self.angle
-
-        if scalar < 0:
-            angle += math.pi
-
-        return Vector(mag, angle)
+        return Vector(
+            self.x * scalar,
+            self.y * scalar
+        )
     
     def subtract(self, other : Vector) -> Vector:
         other = other.multiply(-1)
         return self.add(other)
-
+    
     def dot_product(self, other : Vector) -> float:
         x_components = self.x * other.x
         y_components = self.y * other.y
