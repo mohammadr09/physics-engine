@@ -1,19 +1,21 @@
 from python.core.particle import Particle
 from python.core.vector import Vector
+import random
 
 import pygame
 
 pygame.init()
+clock = pygame.time.Clock()
 
 WIDTH = 800
 HEIGHT = 600
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Physics Engine")
+pygame.display.set_caption("Physics Engine Python Prototype")
 
 particles = [
     Particle(
-        pos=Vector(100, 100),
+        pos=Vector(0, 0),
         velocity=Vector(0, 0),
         acceleration=Vector(0, 0),
         mass=2.5,
@@ -29,8 +31,9 @@ particles = [
     ),
 ]
 
+GRAVITY = Vector(0, 500)
+
 running = True
-clock = pygame.time.Clock()
 
 while running:
     for event in pygame.event.get():
@@ -38,18 +41,28 @@ while running:
             running = False
 
     screen.fill((30, 30, 30))
+    dt = clock.tick(60) / 1000
 
     for particle in particles:
-
         pygame.draw.circle(
             screen,
-            (255, 255, 255),
+            particle.color,
             (int(particle.pos.x), int(particle.pos.y)),
             10
         )
+        
+        f_g = GRAVITY * particle.mass
+        particle.apply_force(f_g)
+        particle.apply(dt)
+
+        if particle.pos.y >= HEIGHT:
+            particle.pos.y = HEIGHT
+            particle.velocity.y *= -0.8
+
+        if particle.pos.x >= WIDTH:
+            particle.pos.x = WIDTH
+            particle.velocity.x *= -0.8
 
     pygame.display.flip()
-
-    clock.tick(60)
 
 pygame.quit()
