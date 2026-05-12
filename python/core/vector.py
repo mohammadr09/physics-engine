@@ -65,3 +65,26 @@ class Vector:
         cos_theta = max(-1, min(1, cos_theta)) # clamp
 
         return math.acos(cos_theta)
+    
+    def normalize(self) -> Vector:
+        if self.magnitude == 0:
+            raise ValueError("Cannot normalize a vector with magnitude of zero")
+        
+        return self.multiply(1 / self.magnitude)
+    
+    # Other Methods
+    def copy(self) -> Vector:
+        return Vector(self.x, self.y)
+    
+    # Vector Overloading 
+    def __add__(self, other : Vector) -> Vector:
+        return self.add(other)
+    
+    def __sub__(self, other : Vector) -> Vector:
+        return self.subtract(other)
+    
+    def __mul__(self, scalar : float) -> Vector:
+        return self.multiply(scalar)
+    
+    def __rmul__(self, scalar : float) -> Vector:
+        return self.multiply(scalar)
