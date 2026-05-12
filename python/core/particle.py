@@ -1,5 +1,6 @@
 from __future__ import annotations
 from python.core.vector import Vector
+import random
 
 class Particle:
     def __init__(self, pos : Vector,
@@ -13,6 +14,7 @@ class Particle:
         self.acceleration = acceleration
         self.mass = mass
         self.force = force if force is not None else Vector(0,0)
+        self.color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
 
     # Getters and Setters
     @property
