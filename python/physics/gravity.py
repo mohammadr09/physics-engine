@@ -1,4 +1,4 @@
-from python.core.particle import Particle
+from python.physics.particle import Particle
 from python.core.vector import Vector
 import math
 
