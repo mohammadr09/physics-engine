@@ -66,6 +66,7 @@ class Vector:
 
         return math.acos(cos_theta)
     
+    # Returns a unit vector
     def normalize(self) -> Vector:
         if self.magnitude == 0:
             raise ValueError("Cannot normalize a vector with magnitude of zero")
