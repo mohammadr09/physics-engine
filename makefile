@@ -10,7 +10,7 @@ install: setup
 	$(PYTHON) -m pip install -r requirements.txt
 
 run: setup
-	$(PYTHON) -m python.visual.simulation
+	$(PYTHON) -m python.render.simulation
 
 freeze: setup
 	$(PYTHON) -m pip freeze > requirements.txt

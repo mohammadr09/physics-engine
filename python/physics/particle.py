@@ -29,7 +29,7 @@ class Particle:
         self._mass = value
 
     @property
-    def kinetic_energy(self):
+    def kinetic_energy(self) -> float:
         return 0.5 * self.mass * self.velocity.magnitude ** 2
 
     # apply_force(self, force) -> Vector

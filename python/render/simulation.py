@@ -32,6 +32,7 @@ particles = [
 ]
 
 GRAVITY = Vector(0, 500)
+RADIUS = 10
 
 running = True
 
@@ -47,20 +48,20 @@ while running:
         pygame.draw.circle(
             screen,
             particle.color,
-            (int(particle.pos.x), int(particle.pos.y)),
-            10
+            (int(particle.pos.x), int(particle.pos.y)), 
+            RADIUS
         )
         
         f_g = GRAVITY * particle.mass
         particle.apply_force(f_g)
         particle.apply(dt)
 
-        if particle.pos.y >= HEIGHT:
-            particle.pos.y = HEIGHT
+        if particle.pos.y >= HEIGHT - RADIUS:
+            particle.pos.y = HEIGHT - RADIUS
             particle.velocity.y *= -0.8
 
-        if particle.pos.x >= WIDTH:
-            particle.pos.x = WIDTH
+        if particle.pos.x >= WIDTH - RADIUS:
+            particle.pos.x = WIDTH - RADIUS
             particle.velocity.x *= -0.8
 
     pygame.display.flip()
