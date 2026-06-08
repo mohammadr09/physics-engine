@@ -1,7 +1,6 @@
 from python.physics.forces.force import ForceGenerator
 from python.physics.particle import Particle
 from python.core.vector import Vector
-import math
 
 class Spring(ForceGenerator):
     # Fsp = kx
@@ -11,7 +10,7 @@ class Spring(ForceGenerator):
                  eq_length : float) -> None:
         self.anchor = anchor
         self.k = k
-        self.eq_length = eq_length
+        self.eq_length = eq_length # equillibrium (rest) length of the spring
 
     # Getters and Setters
     @property

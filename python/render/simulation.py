@@ -1,6 +1,10 @@
 from python.physics.particle import Particle
 from python.core.vector import Vector
+from python.physics.world import World
+from python.physics.forces.gravity import Gravity
+from python.physics.forces.drag import Drag
 import random
+import math
 
 import pygame
 
@@ -9,30 +13,25 @@ clock = pygame.time.Clock()
 
 WIDTH = 800
 HEIGHT = 600
+RADIUS = 10
+
+world = World()
+gravity = Gravity(-9.8)
+drag = Drag(20, 0.28, math.pi * (RADIUS ** 2))
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Physics Engine Python Prototype")
+pygame.display.set_caption("Physics Engine • Python Prototype")
 
-particles = [
-    Particle(
-        pos=Vector(0, 0),
-        velocity=Vector(0, 0),
-        acceleration=Vector(0, 0),
-        mass=2.5,
-        force=None
-    ),
+ball = Particle(
+    Vector(400,300),
+    Vector(0,0),
+    Vector(0,0),
+    RADIUS
+)
 
-    Particle(
-        pos=Vector(300, 200),
-        velocity=Vector(-5, 30),
-        acceleration=Vector(0, 0),
-        mass=5.5,
-        force=None
-    ),
-]
-
-GRAVITY = Vector(0, 500)
-RADIUS = 10
+world.append_particle(ball)
+world.append_force_generator(gravity)
+# world.append_force_generator(drag)
 
 running = True
 
@@ -44,24 +43,32 @@ while running:
     screen.fill((30, 30, 30))
     dt = clock.tick(60) / 1000
 
-    for particle in particles:
+    world.update(dt)
+
+    for particle in world.particles:
+        print(type(particle.pos.x))
+        print(type(particle.pos.y))
+        print(particle.pos)
+
         pygame.draw.circle(
             screen,
             particle.color,
             (int(particle.pos.x), int(particle.pos.y)), 
             RADIUS
         )
-        
-        f_g = GRAVITY * particle.mass
-        particle.apply_force(f_g)
-        particle.apply(dt)
 
         if particle.pos.y >= HEIGHT - RADIUS:
             particle.pos.y = HEIGHT - RADIUS
             particle.velocity.y *= -0.8
+        elif particle.pos.y <= 0 - RADIUS:
+            particle.pos.y = 0
+            particle.velocity.y *= -0.8
 
         if particle.pos.x >= WIDTH - RADIUS:
             particle.pos.x = WIDTH - RADIUS
+            particle.velocity.x *= -0.8
+        elif particle.pos.x <= 0 - RADIUS:
+            particle.pos.x = 0
             particle.velocity.x *= -0.8
 
     pygame.display.flip()
